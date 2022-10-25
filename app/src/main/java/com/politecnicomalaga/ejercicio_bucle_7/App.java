@@ -11,61 +11,79 @@ public class App {
         
         Scanner miScan = new Scanner(System.in);
         
-        int select;
-        String pass = "0000";
-        String passin;
+        int select; //opción seleccionada por teclado
+        String pass = "0000"; //contraseña predeterminada
+        String passin; //contraseña introducida por teclado
         
         do{
             
-            System.out.println("1. Asignar nueva combinación");
+            System.out.println("\n1. Asignar nueva combinación");
             System.out.println("2. Abir caja fuerte");
             System.out.println("0. Salir");
             
             System.out.println("Seleccione una opción: ");
             select = miScan.nextInt();
-        
+            
+            //CASO 1
             if(select == 1){
                 
                 System.out.println("Introduzca la contraseña: ");
                 passin = miScan.next();
                 
+                //LA CONTRASEÑA ES CORRECTA
                 if(passin.equals(pass)){
                     
+                    System.out.println("¡Todo ha ido bien!");
                     System.out.println("Introduzca una nueva contraseña: ");
-                    passin = miScan.next();
+                    do{
+                        passin = miScan.next();
+                        if(passin.length() != 4){  
+                        
+                            System.out.println("La contraseña debe tener 4 caracteres");
+                            System.out.println("Introduzca una nueva contraseña: ");
+                        }
+                        else if(passin.equals(pass)){
+                        
+                            System.out.println("La contraseña introducida es la actual");
+                            System.out.println("Introduzca una nueva contraseña: ");
+                        }
+                    }while(passin.length() != 4 || passin.equals(pass));  
                     
-                    if(passin.length() != 4){
-                        System.out.println("La contraseña debe ser de 4 caracteres");
-                    }
-                    else{   
-                        pass = passin;
+                        pass = passin; //guarda la contraseña introducida como contraseña predeterminada
                         System.out.println("Combinación almacenada");
-                    }
                 }
+                //LA CONTRASEÑA ES INCORRECTA
                 else{
-  
                     System.out.println("Combinación errónea");
+                    
+                    if(passin.length() < 4){   
+                    System.out.println("La combinación introducida tiene menos de 4 caracteres");
+                    }
+                    else if(passin.length() > 4){   
+                    System.out.println("La combinación introducida tiene más de 4 caracteres");
+                    }
                 }
             }
+            //CASO 2
             else if(select == 2){
                 
                 System.out.println("Introduzca la contraseña: ");
                 passin = miScan.next();
                 
-                if(passin.equals(pass)){
-                    
+                //CONTRASEÑA CORRECTA
+                if(passin.equals(pass)){ 
                     System.out.println("Caja fuerte abierta");
-  
                 }
+                //CONTRASEÑA INCORRECTA
                 else{
-                    
                     System.out.println("Combinación errónea");
                 }
             }
+            //CASO 0
             else if(select != 0){
-                
                 System.out.println("Esa opción no es correcta");
             }
         }while(select != 0);
+        System.out.println("Cerrando programa. ¡Gracias por su uso!");
     }
 }
